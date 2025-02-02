@@ -1,5 +1,7 @@
 package com.apigithubtask.Dto;
 
 
-public record GithubResponse(String repoName, String login, Branch branch) {
+import java.util.List;
+
+public record GithubResponse(String login,String repoName,List<Branch> branches) {
 }

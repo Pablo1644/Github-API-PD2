@@ -16,7 +16,6 @@ import java.util.List;
 
 @Component
 public class GithubService {
-    // https://api.github.com/users/kalqa
 
     RestTemplate restTemplate;
 
