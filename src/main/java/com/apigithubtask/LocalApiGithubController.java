@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.xml.crypto.NoSuchMechanismException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @RestController
@@ -78,12 +79,21 @@ public class LocalApiGithubController {
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/{login}/{id}")
-    public ResponseEntity<GithubDatabaseResponse> updateRepo(@PathVariable Long id,
+    public ResponseEntity<GithubDatabaseResponse> updateRepo(@PathVariable String login,
+                                                             @PathVariable Long id,
                                                              @RequestBody GithubDatabaseResponse request) {
-        githubUpdater.updateById(id, request);
+        githubUpdater.updatePartiallyById(id, request);
+
         GithubDatabaseResponse updatedRepo = githubRetriever.findById(id);
-        return ResponseEntity.ok(updatedRepo);
+
+        if (updatedRepo != null && updatedRepo.getOwner() != null) {
+            GithubDatabaseResponse response = new GithubDatabaseResponse(null,updatedRepo.getOwner(), updatedRepo.getName());
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
+
 
 
 }
