@@ -82,9 +82,7 @@ public class LocalApiGithubController {
     public ResponseEntity<GithubDatabaseResponse> updateRepo(@PathVariable String login,
                                                              @PathVariable Long id,
                                                              @RequestBody GithubDatabaseResponse request) {
-//        githubUpdater.updatePartiallyById(id, request);
-//
-//        GithubDatabaseResponse updatedRepo = githubRetriever.findById(id);
+
         GithubDatabaseResponse updatedRepo = githubUpdater.updatePartiallyById(id, request);
         if (updatedRepo != null && updatedRepo.getOwner() != null) {
             GithubDatabaseResponse response = new GithubDatabaseResponse(null,updatedRepo.getOwner(), updatedRepo.getName());
