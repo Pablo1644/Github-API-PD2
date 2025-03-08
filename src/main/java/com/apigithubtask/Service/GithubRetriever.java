@@ -29,9 +29,4 @@ public class GithubRetriever {
             throw new RepoNotFoundException("Repo with id " + id + " not found");
         }
     }
-
-
-
-
-
 }
